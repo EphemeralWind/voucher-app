@@ -20,7 +20,7 @@ async function getPromo(request, response) {
   });
 
   if(!promo) {
-    return response.status(404).send({ error: 'Invalid promo.'});
+    return response.status(404).send({ error: 'Promo tidak dapat ditemukan.'});
   }
 
   response.json(promo);
@@ -33,7 +33,7 @@ async function generateVoucher(request, response) {
   console.log(request.body);
 
   if(!user) {
-    return response.status(404).send({ error: 'Invalid user.'});
+    return response.status(404).send({ error: 'User tidak dapat ditemukan.'});
   }
 
   const promo = await Promo.findOne({
@@ -43,7 +43,7 @@ async function generateVoucher(request, response) {
   console.log('paag promo', promo, promo.id, promo.code);
 
   if(!promo) {
-    return response.status(404).send({ error: 'Invalid promo.'});
+    return response.status(404).send({ error: 'Promo tidak dapat ditemukan.'});
   }
 
   const [voucher, created] = await Voucher.findOrCreate({
@@ -68,23 +68,23 @@ async function redeemVoucher(request, response) {
   });
 
   if(!promo) {
-    return response.status(404).send({ error: 'Invalid promo.'});
+    return response.status(404).send({ error: 'Promo tidak dapat ditemukan.'});
   }
 
   if(!voucher) {
-    return response.status(404).send({ error: 'Invalid voucher.'});
+    return response.status(404).send({ error: 'Voucher tidak dapat ditemukan.'});
   }
 
   if(promo.expiry < new Date()) {
-    return response.status(500).send({ error: 'Expired promo.'});
+    return response.status(500).send({ error: 'Promo sudah berakhir.'});
   }
 
   if(promo.remaining <= 0) {
-    return response.status(500).send({ error: 'No more promo.'});
+    return response.status(500).send({ error: 'Promo sudah habis.'});
   }
 
   if(voucher.claimed) {
-    return response.status(500).send({ error: 'Voucher already used.'});
+    return response.status(500).send({ error: 'Voucher sudah pernah dipakai.'});
   }
 
   promo.remaining = promo.remaining - 1;
