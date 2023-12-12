@@ -66,8 +66,8 @@ async function getPromoHtml(request, response) {
    head.appendChild(parse(`<meta property="og:type"              content="website" />`));
    head.appendChild(parse(`<meta property="og:title"              content="${promo.name}" />`));
    head.appendChild(parse(`<meta property="og:description"        content="${promo.description}" />`));
-   head.appendChild(parse(`<meta property="og:image" itemprop="image" content="${request.protocol}://${request.get('host')}${promo.image.replace('.', '_thumb.')}" />`));
-   head.appendChild(parse(`<meta property="og:image:secure_url" itemprop="image" content="${request.protocol}://${request.get('host')}${promo.image.replace('.', '_thumb.')}" />`));
+   head.appendChild(parse(`<meta property="og:image" itemprop="image" content="https://${request.get('host')}${promo.image.replace('.', '_thumb.')}" />`));
+   head.appendChild(parse(`<meta property="og:image:secure_url" itemprop="image" content="https://${request.get('host')}${promo.image.replace('.', '_thumb.')}" />`));
 
 /*
 <meta property="og:url"                content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
